@@ -6,3 +6,6 @@ services:
             - "5984:5984"
         volumes:
             - ./data:/usr/local/var/lib/couchdb
+        environment:
+            COUCHDB_USER: admin
+            COUCHDB_PASSWORD: admin
