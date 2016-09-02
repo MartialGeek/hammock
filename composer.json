@@ -1,0 +1,15 @@
+{
+    "name": "martial/hammock",
+    "description": "A CouchDB client",
+    "type": "library",
+    "license": "LGPL-V2",
+    "authors": [
+        {
+            "name": "Martial Saunois",
+            "email": "saunois.martial@gmail.com"
+        }
+    ],
+    "require": {
+        "guzzlehttp/guzzle": "~6.2.1"
+    }
+}
