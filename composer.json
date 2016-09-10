@@ -11,5 +11,10 @@
     ],
     "require": {
         "guzzlehttp/guzzle": "~6.2.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "Martial\\Hammock\\": "src/"
+        }
     }
 }
