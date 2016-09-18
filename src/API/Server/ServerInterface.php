@@ -2,82 +2,77 @@
 
 namespace Martial\Hammock\API\Server;
 
-use Martial\Hammock\API\Server\Exception\AdministratorPrivilegesRequiredException;
-use Martial\Hammock\API\Server\Exception\BadContentTypeRequestException;
-use Martial\Hammock\API\Server\Exception\InvalidJsonDataException;
-use Martial\Hammock\API\Server\Exception\InvalidJsonSpecificationException;
+use GuzzleHttp\Exception\ClientException;
+use Martial\Hammock\API\Security\AuthenticationTokenInterface;
 use Martial\Hammock\API\Server\Request\ReplicationRequestInterface;
-use Martial\Hammock\API\Server\Response\ReplicationResponseInterface;
-use Martial\Hammock\API\Server\VO\DatabaseEventVOInterface;
-use Martial\Hammock\API\Server\VO\DatabaseVOInterface;
-use Martial\Hammock\API\Server\VO\RootDataVOInterface;
-use Martial\Hammock\API\Server\VO\ServerStatisticsVOInterface;
-use Martial\Hammock\API\Server\VO\TaskVOInterface;
 use Psr\Http\Message\StreamInterface;
 
 interface ServerInterface
 {
     /**
-     * @return RootDataVOInterface
+     * @return string
      */
     public function getRootData();
 
     /**
-     * @return TaskVOInterface[]
-     * @throws AdministratorPrivilegesRequiredException
+     * @param AuthenticationTokenInterface $authenticationToken
+     * @return string
+     * @throws ClientException
      */
-    public function getActiveTasks();
+    public function getActiveTasks(AuthenticationTokenInterface $authenticationToken);
 
     /**
-     * @return DatabaseVOInterface[]
+     * @return string
      */
     public function getAllDatabases();
 
     /**
+     * @param AuthenticationTokenInterface $authenticationToken
      * @param string $feed
      * @param int $timeout
      * @param bool $heartBeat
-     * @return DatabaseEventVOInterface[]
-     * @throws AdministratorPrivilegesRequiredException
+     * @return string
+     * @throws ClientException
      */
     public function getDatabaseUpdates(
-        $feed = DatabaseEventVOInterface::FEED_LONG_POLL,
+        AuthenticationTokenInterface $authenticationToken,
+        $feed = 'longpoll',
         $timeout = 60,
         $heartBeat = true
     );
 
     /**
+     * @param AuthenticationTokenInterface $authenticationToken
      * @param int $bytes
      * @param int $offset
      * @return StreamInterface
-     * @throws AdministratorPrivilegesRequiredException
+     * @throws ClientException
      */
-    public function getLog($bytes = 1000, $offset = 0);
+    public function getLog(AuthenticationTokenInterface $authenticationToken, $bytes = 1000, $offset = 0);
 
     /**
+     * @param AuthenticationTokenInterface $authenticationToken
      * @param ReplicationRequestInterface $request
-     * @return ReplicationResponseInterface
-     * @throws AdministratorPrivilegesRequiredException
-     * @throws InvalidJsonDataException
-     * @throws InvalidJsonSpecificationException
+     * @return string
+     * @throws ClientException
      */
-    public function replicate(ReplicationRequestInterface $request);
+    public function replicate(AuthenticationTokenInterface $authenticationToken, ReplicationRequestInterface $request);
 
     /**
+     * @param AuthenticationTokenInterface $authenticationToken
      * @return bool
-     * @throws AdministratorPrivilegesRequiredException
-     * @throws BadContentTypeRequestException
+     * @throws ClientException
      */
-    public function restart();
+    public function restart(AuthenticationTokenInterface $authenticationToken);
 
     /**
-     * @return ServerStatisticsVOInterface[]
+     * @return string
      */
     public function getAllStatistics();
 
     /**
      * @param string $section
-     * @return ServerStatisticsVOInterface
+     * @return string
      */
     public function getSectionStatistics($section);
 
