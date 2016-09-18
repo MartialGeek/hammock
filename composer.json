@@ -20,7 +20,8 @@
     },
     "autoload": {
         "psr-4": {
-            "Martial\\Hammock\\": "src/"
+            "Martial\\Hammock\\": "src/",
+            "Martial\\Hammock\\Test\\": "tests/"
         }
     },
     "config": {
